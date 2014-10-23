@@ -3,7 +3,7 @@ begin
   require 'rspec/core/rake_task'
 
   namespace :spec do
-    desc "Run the code examples in spec/ except those in spec/features"
+    desc 'Run the code examples in spec/ except those in spec/features'
     RSpec::Core::RakeTask.new(:without_features) do |t|
       t.exclude_pattern = 'spec/features/**/*_spec.rb'
     end
@@ -20,17 +20,17 @@ begin
   require 'guard/jasmine/task'
 
   namespace :spec do
-    desc "Run all javascript specs"
+    desc 'Run all javascript specs'
     task :javascripts do
       begin
         ::Guard::Jasmine::CLI.start([])
 
       rescue SystemExit => e
         case e.status
-          when 1
-            fail "Some specs have failed."
-          when 2
-            fail "The spec couldn't be run: #{e.message}."
+        when 1
+          raise 'Some specs have failed.'
+        when 2
+          raise "The spec couldn't be run: #{e.message}."
         end
       end
     end
@@ -50,7 +50,6 @@ rescue LoadError
     end
   end
 end
-
 
 Rake::Task['spec'].clear_actions
 

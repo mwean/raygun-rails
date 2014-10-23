@@ -1,19 +1,16 @@
 test:
   override:
-    - bundle exec rake spec:without_features spec:features
-    - bundle exec guard-jasmine
-  post:
-    - bundle exec rake db:sample_data
+    - bundle exec rake rubocop coffeelint spec:without_features spec:features
 
 deployment:
   acceptance:
     branch: development
-    commands:
-      - ./bin/deploy.sh app-prototype-acceptance:
-          timeout: 360
+    heroku:
+      appname: app_prototype-acceptance
+        timeout: 360
 
   production:
-    branch: master 
-    commands:
-      - ./bin/deploy.sh app-prototype:
-          timeout: 360
+    branch: master
+    heroku:
+      appname: app_prototype
+        timeout: 360

@@ -2,26 +2,24 @@
 # https://blog.heroku.com/archives/2013/2/27/unicorn_rails
 # http://devblog.thinkthroughmath.com/blog/2013/02/27/managing-request-queuing-with-rails-on-heroku/
 
-listen           ENV['PORT'], backlog: Integer(ENV['UNICORN_BACKLOG'] || 16)
-worker_processes Integer(ENV['UNICORN_WORKERS'] || 3)
-timeout          15
-preload_app      true
+listen ENVied.PORT, backlog: ENVied.UNICORN_BACKLOG
+worker_processes ENVied.UNICORN_WORKERS
+timeout ENVied.UNICORN_TIMEOUT
+preload_app true
 
-before_fork do |server, worker|
+before_fork do |_server, _worker|
   Signal.trap 'TERM' do
     puts 'Unicorn master intercepting TERM and sending myself QUIT instead.'
     Process.kill 'QUIT', Process.pid
   end
 
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.connection.disconnect!
+  ActiveRecord::Base.connection.disconnect! if defined?(ActiveRecord::Base)
 end
 
-after_fork do |server, worker|
+after_fork do |_server, _worker|
   Signal.trap 'TERM' do
     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT.'
   end
 
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
 end
