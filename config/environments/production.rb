@@ -1,6 +1,4 @@
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -16,16 +14,17 @@ Rails.application.configure do
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
-  # For large-scale production use, consider using a caching reverse proxy like
-  # NGINX, varnish or squid.
-  # config.action_dispatch.rack_cache = true
+  config.action_dispatch.rack_cache = true
 
-  # When deploying to Heroku, the app must serve static files (or serve them from a CDN).
-  config.serve_static_files = true
+  # When deploying to Heroku, the app must serve static assets (or serve them from a CDN).
+  config.serve_static_assets = true
+  config.static_cache_control = "public, max-age=#{1.year.to_i}"
+
+  config.middleware.use Rack::Deflater
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
-  # config.assets.css_compressor = :sass
+  config.assets.css_compressor = CSSminify.new
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false

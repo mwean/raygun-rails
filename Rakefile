@@ -6,6 +6,15 @@ require File.expand_path('../config/application', __FILE__)
 
 AppPrototype::Application.load_tasks
 
+if Rails.env.in?(%w(test development))
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+end
+
 # Spec is the default rake target.
 task(:default).clear
-task default: 'spec'
+task default: 'rubocop'
+task default: 'coffeelint'
+task default: 'spec:without_features'
+task default: 'konacha:run'
+task default: 'spec:features'

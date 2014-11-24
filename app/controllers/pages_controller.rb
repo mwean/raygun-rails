@@ -1,6 +1,3 @@
 class PagesController < ApplicationController
-
-  def root
-  end
-
+  include HighVoltage::StaticPage
 end

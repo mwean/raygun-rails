@@ -3,10 +3,12 @@ begin
   require 'rspec/core/rake_task'
 
   namespace :spec do
-    desc "Run the code examples in spec/ except those in spec/features"
+    desc 'Run the code examples in spec/ except those in spec/features'
     RSpec::Core::RakeTask.new(:without_features) do |t|
       t.exclude_pattern = 'spec/features/**/*_spec.rb'
     end
+
+    RSpec::Core::RakeTask.new(:all)
   end
 
 rescue LoadError
@@ -19,4 +21,4 @@ end
 Rake::Task['spec'].clear_actions
 
 desc 'Runs all specs'
-task spec: ['spec:without_features', 'spec:features', 'spec:javascripts']
+task spec: ['spec:without_features', 'assets:clean', 'konacha:run', 'spec:features']

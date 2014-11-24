@@ -1,20 +1,23 @@
 test:
+  pre:
+    - bundle exec rake rubocop
+    - bundle exec rake coffeelint
+    - bundle exec brakeman -A --no-combine-locations -z -o $ARTIFACTS/brakeman.html
   override:
-    # Default task run all specs.
-    - rake
+    - bundle exec rake konacha:run
+    - bundle exec rake spec:all
   post:
-    # Make sure sample_data still runs correctly, since it's easy to miss.
     - rake db:sample_data
 
 deployment:
   acceptance:
-    branch: development
+    branch: develop
     commands:
-      - ./bin/deploy.sh app-prototype-acceptance:
-          timeout: 360
+      - git push --force git@heroku.com:app-prototype-acceptance.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app app-prototype-acceptance
 
   production:
-    branch: master 
+    branch: master
     commands:
-      - ./bin/deploy.sh app-prototype:
-          timeout: 360
+      - git push --force git@heroku.com:app-prototype.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app app-prototype

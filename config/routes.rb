@@ -1,7 +1,9 @@
 AppPrototype::Application.routes.draw do
-
-  root to: 'pages#root'
-
-  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+  get '/*id',
+      controller: :pages,
+      action: :show,
+      as: :page,
+      format: false
+  root controller: :pages, action: :show, id: 'home'
 
 end
