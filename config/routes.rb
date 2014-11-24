@@ -1,5 +1,9 @@
 AppPrototype::Application.routes.draw do
+  get '/*id',
+      controller: :pages,
+      action: :show,
+      as: :page,
+      format: false
 
-  root to: 'pages#root'
-
+  root controller: :pages, action: :show, id: 'home'
 end

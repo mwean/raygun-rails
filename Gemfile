@@ -1,58 +1,81 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
-# Heroku uses the ruby version to configure your application's runtime.
-ruby '2.1.3'
+ruby '2.1.5'
 
-gem 'unicorn'
-gem 'rack-canonical-host'
-gem 'rails', '~> 4.2.0.beta2'
-gem 'pg'
-
-gem 'slim-rails'
-gem 'sass-rails', '~> 5.0.0.beta1'                     # Rails 4.2 support
-gem 'bootstrap-sass'
-gem 'jquery-rails'
-gem 'coffee-rails'
-gem 'simple_form', '~> 3.1.0.rc2'                      # Bootstrap 3 support
-gem 'uglifier'
-
+gem 'active_model_serializers', '~> 0.9.0'
+gem 'angular-rails-templates'
+gem 'annotate', '~> 2.6.5'
+gem 'autoprefixer-rails'
 gem 'awesome_print'
+gem 'bitters'
+gem 'bourbon'
+gem 'coffee-rails'
+gem 'cssminify'
+gem 'gon'
+gem 'high_voltage', '~> 2.2.1'
+gem 'i18n-tasks', '~> 0.7.8'
+gem 'jquery-rails'
+gem 'neat'
+gem 'newrelic_rpm', '>= 3.7.3'
+gem 'ngannotate-rails'
+gem 'oj'
+gem 'pg'
+gem 'rack-canonical-host'
+gem 'rails', '~> 4.2.0.beta4'
+gem 'rails-assets-angular'
+gem 'rails-assets-lodash'
+gem 'rails-assets-normalize.css'
+gem 'sass-rails', '~> 5.0.0.beta1'
+gem 'simple_form', github: 'plataformatec/simple_form' # Fixes Rails deprecation notice
+gem 'slim-rails'
+gem 'sorcery'
+gem 'uglifier'
+gem 'unicorn'
 
 group :production, :acceptance do
-  gem 'rails_stdout_logging'
   gem 'heroku_rails_deflate'
+  gem 'rack-cache'
+  gem 'rack-timeout'
+  gem 'rails_stdout_logging'
 end
 
 group :test do
-  gem 'fuubar'
-  gem 'jasminerice', github: 'bradphelan/jasminerice'  # Latest release still depends on haml.
   gem 'capybara'
-  #gem 'capybara-email'
-  gem 'poltergeist'
-  gem 'factory_girl_rails'
-  #gem 'timecop'
+  gem 'capybara-screenshot'
   gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'poltergeist'
+  gem 'rack_session_access'
+  gem 'selenium-webdriver'
+  gem 'shoulda-matchers', require: false
   gem 'simplecov'
+  gem 'zonebie'
 end
 
 group :test, :development do
+  gem 'byebug'
+  gem 'coffeelint', '~> 0.4.0'
+  gem 'dotenv-rails'
+  gem 'konacha'
+  gem 'pry'
+  gem 'rails-assets-angular-mocks'
+  gem 'rails-assets-rosie'
   gem 'rspec-rails'
-  #gem 'cane'
-  #gem 'morecane'
+  gem 'rubocop', '~> 0.27.0', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :development do
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'foreman'
-  gem 'launchy'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'quiet_assets'
-  gem 'guard', '~> 2'
-  gem 'guard-rspec'
-  gem 'guard-jasmine'
+  gem 'guard', '~> 2.6.1'
   gem 'guard-livereload'
+  gem 'launchy'
+  gem 'quiet_assets'
+  gem 'rack-livereload'
   gem 'rb-fsevent'
-  gem 'growl'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'terminal-notifier-guard'
 end
